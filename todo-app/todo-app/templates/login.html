@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Todo Time - Login</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="navbar"><span class="brand">Todo Time</span></div>
+
+    <div class="container">
+        <div class="card">
+            <h1>Log in</h1>
+
+            <span class="error" id="err_general">{% if errors.general %}{{ errors.general }}{% endif %}</span>
+
+            <form id="loginForm" method="POST" action="/login" novalidate>
+                <div class="form-row">
+                    <label>Email</label>
+                    <input type="text" name="email" value="{{ email }}">
+                    <span class="error" id="err_email">{% if errors.email %}{{ errors.email }}{% endif %}</span>
+                </div>
+                <div class="form-row">
+                    <label>Password</label>
+                    <input type="password" name="password">
+                    <span class="error" id="err_password">{% if errors.password %}{{ errors.password }}{% endif %}</span>
+                </div>
+                <button type="submit">Log in</button>
+            </form>
+
+            <p class="link-text">Don't have an account? <a href="/register">Register</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function (event) {
+            var form = event.target;
+            var emailError = form.email.value.trim() === "" ? "Email is required" : "";
+            var passwordError = form.password.value === "" ? "Password is required" : "";
+
+            document.getElementById("err_general").textContent = "";
+            document.getElementById("err_email").textContent = emailError;
+            document.getElementById("err_password").textContent = passwordError;
+
+            if (emailError || passwordError) {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
